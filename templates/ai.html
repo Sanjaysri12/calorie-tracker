@@ -1,8 +1,42 @@
 {% extends "base.html" %}
 
 {% block title %}AI Assistant - Smart Health{% endblock %}
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  /* Navbar */
+        .navbar {
+            background-color: var(--border-color);
+            color: var(--text-light);
+            padding: 1px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(140, 234, 68, 0.1);
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+       
+</style>
+{% endblock %}
 
 {% block content %}
+<nav class="navbar">
+        <div class="navbar-brand">
+            <i class="fa-solid fa-shield-heart"></i> SMART HEALTH ADMIN
+        </div>
+        <div class="navbar-actions">
+            <a href="/dashboard" class="btn btn-outline"><i class="fa-solid fa-arrow-left"></i> Back</a>
+            
+        </div>
+    </nav>
 <div class="dashboard-header" style="text-align: center;">
   <h1 style="color: var(--accent-color);">AI Health Assistant</h1>
   <p>Ask anything about fitness, diet, and health!</p>
