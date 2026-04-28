@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Food Diet - Smart Health{% endblock %}
+
+{% block content %}
+<div class="dashboard-header" style="display: flex; justify-content: space-between; align-items: center;">
+  <div>
+    <h1 style="color: var(--accent-color);">Food Diet Planner</h1>
+    <p>Track your daily meals and nutritional intake.</p>
+  </div>
+  <div style="background: white; padding: 10px 20px; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+    <h3 style="color: var(--btn-color); margin: 0;">{{ total_calories }} kcal</h3>
+    <p style="font-size: 0.8rem; margin: 0; text-align: center;">Total Today</p>
+  </div>
+</div>
+
+<div class="grid-2">
+  <!-- Add Meal Form -->
+  <div class="glass-card">
+    <h3 style="color: var(--accent-color); margin-bottom: 20px;">Log a Meal</h3>
+    <form method="POST">
+      <div class="input-group">
+        <label>Meal Type</label>
+        <select name="meal_title" class="input-control" required>
+          <option value="Breakfast">Breakfast</option>
+          <option value="Lunch">Lunch</option>
+          <option value="Dinner">Dinner</option>
+          <option value="Snack">Snack</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label>Food Item</label>
+        <input type="text" name="item" class="input-control" placeholder="e.g. Oatmeal" required>
+      </div>
+
+      <div class="grid-2">
+        <div class="input-group">
+          <label>Calories</label>
+          <input type="number" name="calories" class="input-control" required>
+        </div>
+        <div class="input-group">
+          <label>Protein (g)</label>
+          <input type="number" name="protein" class="input-control" required>
+        </div>
+        <div class="input-group">
+          <label>Carbs (g)</label>
+          <input type="number" name="carbs" class="input-control" required>
+        </div>
+        <div class="input-group">
+          <label>Fats (g)</label>
+          <input type="number" name="fats" class="input-control" required>
+        </div>
+      </div>
+      
+      <button type="submit" class="btn" style="margin-top: 10px;">Add Meal</button>
+    </form>
+  </div>
+
+  <!-- Today's Log -->
+  <div class="glass-card">
+    <h3 style="color: var(--accent-color); margin-bottom: 20px;">Today's Log</h3>
+    
+    <div style="max-height: 400px; overflow-y: auto;">
+      {% if data %}
+        {% for meal, item, cals, p, c, f in data %}
+          <div style="background: rgba(255,255,255,0.7); padding: 15px; border-radius: 12px; margin-bottom: 15px; border-left: 4px solid var(--btn-color);">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+              <h4 style="margin: 0; color: var(--text-dark);">{{ meal }} - {{ item }}</h4>
+              <span style="font-weight: bold; color: var(--btn-color);">{{ cals }} kcal</span>
+            </div>
+            <div style="display: flex; gap: 15px; font-size: 0.85rem; color: #7f8c8d;">
+              <span>Protein: {{ p }}g</span>
+              <span>Carbs: {{ c }}g</span>
+              <span>Fats: {{ f }}g</span>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p style="color: #7f8c8d; text-align: center; margin-top: 40px;">No meals logged yet today.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

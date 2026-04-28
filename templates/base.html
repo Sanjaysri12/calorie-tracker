@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Smart Health{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+  {% block head %}{% endblock %}
+</head>
+<body>
+
+  <!-- Theme Picker Banner -->
+  <div class="theme-picker">
+    <label>Theme Colors:</label>
+    
+    <label for="bgColor" style="font-size:0.8rem; font-weight:normal; margin-left: 10px;">Background</label>
+    <input type="color" id="bgColor" class="color-input" title="Background Color">
+
+    <label for="navColor" style="font-size:0.8rem; font-weight:normal;">Navbar</label>
+    <input type="color" id="navColor" class="color-input" title="Navbar Color">
+
+    <label for="btnColor" style="font-size:0.8rem; font-weight:normal;">Button</label>
+    <input type="color" id="btnColor" class="color-input" title="Button Color">
+
+    <button id="resetTheme" class="reset-btn">Reset</button>
+  </div>
+
+  <!-- Navbar -->
+  {% if user %}
+  <nav class="navbar">
+    <a href="{{ url_for('dashboard') }}" class="nav-brand">SMART HEALTH</a>
+    <div class="nav-links">
+      <a href="{{ url_for('dashboard') }}">Dashboard</a>
+      <a href="{{ url_for('tracker') }}">Tracker</a>
+      <a href="{{ url_for('workout') }}">Workout Plan</a>
+      <a href="{{ url_for('diet') }}">Food Diet</a>
+      <a href="{{ url_for('ai') }}">AI Assistant</a>
+      <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+      {% if request.endpoint != 'dashboard' %}
+      <a href="javascript:history.back()" class="logout-btn" style="background-color: transparent; border: 1px solid white; margin-left: 10px;">Back</a>
+      {% endif %}
+    </div>
+  </nav>
+  {% endif %}
+
+  <!-- Main Content -->
+  <main class="container">
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Smart Health{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+  <h1 style="color: var(--accent-color);">Welcome, {{ user }}!</h1>
+  <p>Track your health metrics and stay fit.</p>
+</div>
+
+<div class="grid-2">
+  <!-- Calculator Card -->
+  <div class="glass-card">
+    <h2 style="margin-bottom: 20px; color: var(--accent-color);">Calories Calculator</h2>
+    
+    <form method="POST">
+      <div class="grid-2">
+        <div class="input-group">
+          <label>Age</label>
+          <input type="number" name="age" class="input-control" required>
+        </div>
+        
+        <div class="input-group">
+          <label>Gender</label>
+          <select name="gender" class="input-control" required>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        
+        <div class="input-group">
+          <label>Height (cm)</label>
+          <input type="number" step="0.1" name="height" class="input-control" required>
+        </div>
+        
+        <div class="input-group">
+          <label>Weight (kg)</label>
+          <input type="number" step="0.1" name="weight" class="input-control" required>
+        </div>
+        
+        <div class="input-group">
+          <label>Body Temp (°C)</label>
+          <input type="number" step="0.1" name="temp" class="input-control" required>
+        </div>
+        
+        <div class="input-group">
+          <label>Heart Rate (bpm)</label>
+          <input type="number" name="heart" class="input-control" required>
+        </div>
+
+        <div class="input-group" style="grid-column: span 2;">
+          <label>Workout Duration (min)</label>
+          <input type="number" name="duration" class="input-control" required>
+        </div>
+      </div>
+      
+      <button type="submit" class="btn" style="margin-top: 10px;">Calculate</button>
+    </form>
+  </div>
+
+  <!-- Results Card -->
+  <div class="glass-card">
+    <h2 style="margin-bottom: 20px; color: var(--accent-color);">Results</h2>
+    
+    {% if prediction %}
+      <div class="result-box">
+        <p>Calories Burned</p>
+        <h2>{{ "%.2f"|format(prediction) }}</h2>
+        <p>kcal</p>
+      </div>
+
+      {% if tip %}
+      <div class="suggestion-box">
+        <h4 style="margin-bottom: 10px; color: var(--accent-color);">Personalized Tip</h4>
+        <p>{{ tip }}</p>
+      </div>
+      {% endif %}
+
+    {% else %}
+      <div style="text-align: center; padding: 40px; color: #7f8c8d;">
+        <p>Fill out the calculator form to see your predicted calories burned!</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Workout Plan - Smart Health{% endblock %}
+
+{% block content %}
+<div class="dashboard-header" style="text-align: center;">
+  <h1 style="color: var(--accent-color);">Workout Plan</h1>
+  <p>Structured routines to help you achieve your goals.</p>
+</div>
+
+<div class="grid-3" style="margin-bottom: 30px;">
+  <div class="glass-card" style="text-align: center; cursor: pointer; border: 2px solid var(--btn-color);">
+    <h3>🔥 Weight Loss</h3>
+    <p style="font-size: 0.9rem; margin-top:10px;">High-intensity cardio.</p>
+  </div>
+  <div class="glass-card" style="text-align: center; cursor: pointer;">
+    <h3>💪 Muscle Gain</h3>
+    <p style="font-size: 0.9rem; margin-top:10px;">Progressive overload.</p>
+  </div>
+  <div class="glass-card" style="text-align: center; cursor: pointer;">
+    <h3>🧘 Maintenance</h3>
+    <p style="font-size: 0.9rem; margin-top:10px;">Balanced approach.</p>
+  </div>
+</div>
+
+<div class="glass-card">
+  <h2 style="color: var(--accent-color); margin-bottom: 20px;">Weekly Routine</h2>
+  
+  <div class="grid-2">
+    <!-- Day 1 -->
+    <div style="background: rgba(255,255,255,0.6); padding: 15px; border-radius: 12px; border-left: 4px solid var(--btn-color);">
+      <h4>Monday - Push</h4>
+      <ul style="margin-left: 20px; font-size: 0.9rem; margin-top: 10px; color: var(--text-dark);">
+        <li>Pushups - 3x15</li>
+        <li>Bench Press - 4x10</li>
+        <li>Overhead Press - 3x12</li>
+      </ul>
+      <p style="margin-top: 10px; font-size: 0.8rem; color: #7f8c8d;">⏱ 45 mins | 🔥 Medium</p>
+    </div>
+
+    <!-- Day 2 -->
+    <div style="background: rgba(255,255,255,0.6); padding: 15px; border-radius: 12px; border-left: 4px solid var(--btn-color);">
+      <h4>Tuesday - Pull</h4>
+      <ul style="margin-left: 20px; font-size: 0.9rem; margin-top: 10px; color: var(--text-dark);">
+        <li>Pull-ups - 3x8</li>
+        <li>Barbell Rows - 4x10</li>
+        <li>Bicep Curls - 3x15</li>
+      </ul>
+      <p style="margin-top: 10px; font-size: 0.8rem; color: #7f8c8d;">⏱ 45 mins | 🔥 Medium</p>
+    </div>
+
+    <!-- Day 3 -->
+    <div style="background: rgba(255,255,255,0.6); padding: 15px; border-radius: 12px; border-left: 4px solid var(--btn-color);">
+      <h4>Wednesday - Legs</h4>
+      <ul style="margin-left: 20px; font-size: 0.9rem; margin-top: 10px; color: var(--text-dark);">
+        <li>Squats - 4x10</li>
+        <li>Leg Press - 3x12</li>
+        <li>Calf Raises - 4x20</li>
+      </ul>
+      <p style="margin-top: 10px; font-size: 0.8rem; color: #7f8c8d;">⏱ 50 mins | 🔥 Hard</p>
+    </div>
+    
+    <!-- Day 4 -->
+    <div style="background: rgba(255,255,255,0.6); padding: 15px; border-radius: 12px; border-left: 4px solid var(--text-dark);">
+      <h4>Thursday - Rest</h4>
+      <p style="font-size: 0.9rem; margin-top: 10px; color: var(--text-dark);">Take a break and recover.</p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
