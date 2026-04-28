@@ -5,7 +5,7 @@ import pandas as pd
 from sklearn.linear_model import LinearRegression
 import joblib
 from openai import OpenAI
-api_key = os.getenv("AIzaSyBJOV6T_l1zhbXwUJHpTE9IpIdRXMA2iJo")
+api_key = os.getenv("OPENAI_API_KEY")
 if api_key:
     client = OpenAI(api_key=api_key)
 else:
