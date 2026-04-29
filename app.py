@@ -1,26 +1,18 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 import sqlite3, os
 from werkzeug.security import generate_password_hash, check_password_hash
-import pandas as pd
 from sklearn.linear_model import LinearRegression
 import joblib
 from openai import OpenAI
+import pandas as pd
+
 api_key = os.getenv("OPENAI_API_KEY")
 if api_key:
     client = OpenAI(api_key=api_key)
 else:
     client = None
 #----------model trarining----------
-import pandas as pd
 
-try:
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    csv_path = os.path.join(BASE_DIR, "data", "calories.csv")
-    df = pd.read_csv(csv_path)
-    print("SUCCESS: DATA LOADED SUCCESSFULLY")
-    print(df.head())
-except Exception as e:
-    print("ERROR:", e)
 
 app = Flask(__name__)
 app.secret_key = "secret123"
@@ -81,18 +73,44 @@ MODEL_PATH = "model.pkl"
 
 def train_model():
     try:
-        df = pd.read_csv("data/calories.csv")
-        X = df[['age','weight','duration','heart_rate']]
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        csv_path = os.path.join(BASE_DIR, "data", "calories.csv")
+
+        df = pd.read_csv(csv_path)
+
+        # Clean column names
+        df.columns = df.columns.str.strip().str.lower()
+
+        print("Columns:", df.columns)
+
+        # Remove missing values
+        df = df.dropna(subset=['age','height','weight','duration','heart','temp','calories'])
+
+        # Encode gender
+        df['gender'] = df['gender'].map({'male': 0, 'female': 1})
+
+        # Features
+        X = df[['gender','age','height','weight','duration','heart','temp']]
         y = df['calories']
+
         model = LinearRegression()
         model.fit(X, y)
+
         joblib.dump(model, MODEL_PATH)
+
+        print("✅ MODEL TRAINED SUCCESSFULLY")
+
         return model
-    except:
+
+    except Exception as e:
+        print("❌ MODEL ERROR:", e)
         return None
 
+
+# LOAD MODEL
 if os.path.exists(MODEL_PATH):
     model = joblib.load(MODEL_PATH)
+    print("✅ MODEL LOADED")
 else:
     model = train_model()
 
@@ -148,8 +166,7 @@ def signup():
 def dashboard():
     if 'user' not in session:
         return redirect(url_for('login'))
-
-    prediction = None
+    prediction=None
     tip = None
 
     if request.method == 'POST':
@@ -164,9 +181,11 @@ def dashboard():
             temp = float(request.form['temp'])
 
             if model:
-                prediction = model.predict([[age, weight, duration, heart]])[0]
+                gender = 0 if request.form['gender'] == 'male' else 1
+                prediction = model.predict([[gender,age,height,weight,duration,heart,temp]])[0]
+                prediction = float(prediction)
             else:
-                prediction = 200  # fallback
+                prediction = 0.0  # fallback
 
             # SAVE DATA
             conn = sqlite3.connect("database.db")
@@ -188,7 +207,7 @@ def dashboard():
 
         except Exception as e:
             print("ERROR:", e)
-            prediction = "Error"
+            prediction = 0.0
             tip = "Invalid input"
 
     # FETCH CHART DATA (INSIDE FUNCTION ✅)
@@ -375,7 +394,6 @@ def diet():
 
 
 # AI CHATBOT
-
 @app.route('/ai')
 def ai():
     if 'user' not in session:

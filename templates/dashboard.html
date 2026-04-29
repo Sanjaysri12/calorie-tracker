@@ -63,7 +63,7 @@
   <div class="glass-card">
     <h2 style="margin-bottom: 20px; color: var(--accent-color);">Results</h2>
     
-    {% if prediction %}
+    {% if prediction is not none %}
       <div class="result-box">
         <p>Calories Burned</p>
         <h2>{{ "%.2f"|format(prediction) }}</h2>
